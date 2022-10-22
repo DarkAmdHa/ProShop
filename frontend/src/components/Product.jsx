@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom'
 import Rating from './Rating'
 
 function Product({ product }) {
-  const reviewText =
-    product.numReviews > 1
-      ? `${product.numReviews} reviews`
-      : `${product.numReviews} review`
   return (
     <Card className="my-3 p-3 rounded product-card">
       <Link to={`/product/${product._id}`}>
@@ -23,7 +19,15 @@ function Product({ product }) {
         </Link>
 
         <Card.Text as="div">
-          <Rating value={product.rating} text={reviewText} id={product._id} />
+          <Rating
+            value={product.rating}
+            text={
+              product.numReviews > 1
+                ? `${product.numReviews} reviews`
+                : `${product.numReviews} review`
+            }
+            id={product._id}
+          />
         </Card.Text>
 
         <Card.Text as="h3">${product.price}</Card.Text>
