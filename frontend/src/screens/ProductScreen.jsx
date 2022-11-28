@@ -5,15 +5,22 @@ import { Col, Row, Image, ListGroup, Card, Button } from 'react-bootstrap'
 import Rating from '../components/Rating'
 
 function ProductScreen() {
-  const { id } = useParams()
   const [product, setProduct] = useState({})
+  const { id } = useParams()
   useEffect(() => {
     const fetchProduct = async () => {
       const { data } = await axios.get(`/api/products/${id}`)
-      setProduct(data)
+      if (data.message) {
+        console.log(data.message)
+      } else {
+        setProduct(data)
+      }
     }
     fetchProduct()
   }, [id])
+  if (!product) {
+    return <>No Product Found!</>
+  }
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
